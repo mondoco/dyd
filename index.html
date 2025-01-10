@@ -61,7 +61,6 @@
     <div id="dress"></div>
 
     <script>
-        document.getElementById("dress").style.display = "block";
         function merge_images(path) {
             const dressDiv = document.getElementById("dress");
             const img = document.createElement("img");
@@ -71,6 +70,7 @@
         }
 
         function rc() {
+            document.getElementById("dress").style.display = "block";
             const skirt_choices = ['q', 'j', 't', 'u', 'i'];
             let skirt = [skirt_choices[Math.floor(Math.random() * skirt_choices.length)]];
 
