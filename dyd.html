@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Your Dress</title>
+    <style>
+        #dress {
+            position: relative;
+            width: 100%;
+            max-width: 528px; /* تعديل الحجم حسب الحاجة */
+            height: auto; /* تعديل الحجم حسب الحاجة */
+        }
+        .image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Design Your Dress</h1>
+    <button onclick="rc()">New Design</button>
+    <div id="dress"></div>
+
+    <script>
+        function merge_images(path) {
+            const dressDiv = document.getElementById("dress");
+            const img = document.createElement("img");
+            img.src = `assets/${path}.png`;
+            img.className = "image";
+            dressDiv.appendChild(img);
+        }
+
+        function rc() {
+            const skirt_choices = ['q', 'j', 't', 'u', 'i'];
+            let skirt = [skirt_choices[Math.floor(Math.random() * skirt_choices.length)]];
+
+            if (skirt[0] === 'u') {
+                skirt.push(['a', 'b', 'i', 'e', 'j', 's'][Math.floor(Math.random() * 6)]);
+            } else if (skirt[0] === 'q' || skirt[0] === 't' || skirt[0] === 'i') {
+                skirt.push(['a', 'b', 'e', 'j', 's', 'r'][Math.floor(Math.random() * 6)]);
+            } else if (skirt[0] === 'j') {
+                skirt.push(['d', 'r'][Math.floor(Math.random() * 2)]);
+            }
+
+            const waist_choices = ['a', 'o'];
+            let waist = [waist_choices[Math.floor(Math.random() * waist_choices.length)]];
+            if (waist[0] === "a") {
+                waist.push(['b', 'c', 'd', 'e', 'i', 'j', 'l', 'm', 'r', 's', 'k'][Math.floor(Math.random() * 11)]);
+            } else if (waist[0] === "o") {
+                waist.push(['e', 'r', 's'][Math.floor(Math.random() * 3)]);
+            }
+
+            const back_choices = ['a', 'o', 'n', 'p'];
+            let back = [back_choices[Math.floor(Math.random() * back_choices.length)]];
+            if (back[0] === "a") {
+                back.push(['b', 'c', 'e', 'j', 'l', 'r', 's'][Math.floor(Math.random() * 7)]);
+            } else if (back[0] === "n" || back[0] === "p") {
+                back.push(['b', 'c', 'e', 's'][Math.floor(Math.random() * 4)]);
+            }
+            document.getElementById("dress").innerHTML = `
+                <img class="image" src="assets/bg.png" alt="the dress">
+                <img class="image" src="assets/skirt/${skirt.join('')}.png" alt="the dress">
+                <img class="image" src="assets/waist/${waist.join('')}.png" alt="the dress">
+                <img class="image" src="assets/back/${back.join('')}.png" alt="the dress">
+            `;
+            const hand_choices = ['a', 'f', 'g', 'h'];
+            let hand = [hand_choices[Math.floor(Math.random() * hand_choices.length)]];
+
+            if (hand[0] !== 'g') {
+                merge_images('sleeves/addon');
+                if (back.includes(hand[0])) {
+                    merge_images('back/addon');
+                }
+            }
+
+            if (hand[0] === 'g' && (back.includes('a') || back.includes('p'))) {
+                merge_images('sleeves/g');
+            }
+
+            if (hand[0] === 'a') {
+                hand.push(['b', 'c', 'd', 'e', 'i', 'j', 'l', 'm', 'r', 's', 't'][Math.floor(Math.random() * 11)]);
+            } else if (hand[0] === 'h') {
+                hand.push(['b', 'c', 'd', 'e', 'i', 'j', 'l', 'r', 's', 't'][Math.floor(Math.random() * 10)]);
+            } else if (hand[0] === 'g') {
+                hand.push(['a', 'f', 'h'][Math.floor(Math.random() * 3)]);
+                if (hand[1] === 'a' || hand[1] === 'h') {
+                    hand.push(['b', 'c', 'e', 'i', 'l', 'r', 's'][Math.floor(Math.random() * 7)]);
+                }
+            }
+
+            if (hand[0] !== 'f' && hand.join('') !== 'gf' && hand.length === 2) {
+                merge_images(`sleeves/${hand.join('')}`);
+            }
+
+            if (hand.length === 3) {
+                merge_images(`sleeves/${hand.slice(1).join('')}`);
+                merge_images('sleeves/s');
+            }
+
+
+        }
+    </script>
+</body>
+</html>
