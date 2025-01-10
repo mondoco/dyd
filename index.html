@@ -32,7 +32,8 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.1); 
             margin-bottom: 20px; 
             padding: 10px; 
-            box-sizing: border-box; 
+            box-sizing: border-box;
+            display: none;
         } 
         .image {
             position: absolute; top: 0; left: 0; 
@@ -60,6 +61,7 @@
     <div id="dress"></div>
 
     <script>
+        document.getElementById("dress").style.display = "block";
         function merge_images(path) {
             const dressDiv = document.getElementById("dress");
             const img = document.createElement("img");
